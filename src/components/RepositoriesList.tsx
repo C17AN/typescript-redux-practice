@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import { useActions } from "../hooks/useActions";
+import { useTypedSelector } from "../hooks/useTypedSelector";
 import { actionCreators } from "../redux";
 
 type Props = {};
@@ -15,7 +15,7 @@ const RepositoriesList = (props: Props) => {
 
   // useTypedSelector 훅을 만들어 사용한다.
   // useTypedSelector = TypedUseSelectorHook<ReturnType<typeof reducers>> = useSelector
-  const { data, error, loading } = useSelector((state: any) => state.repositories);
+  const { data, error, loading } = useTypedSelector((state) => state.repositories);
 
   const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
@@ -33,6 +33,9 @@ const RepositoriesList = (props: Props) => {
         <input type="text" value={term} onChange={(e) => setTerm(e.target.value)} />
         <button>검색</button>
       </form>
+      {error && <h3>{error}</h3>}
+      {loading && <h3>Loading...</h3>}
+      {!error && !loading && data.map((packageName) => <div key={packageName}>{packageName}</div>)}
     </div>
   );
 };
