@@ -1,9 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Dispatch } from "redux";
+import { useActions } from "../hooks/useActions";
+import { actionCreators } from "../redux";
 
 type Props = {};
 
 const RepositoriesList = (props: Props) => {
-  return <div>RepositoriesList</div>;
+  const [term, setTerm] = useState("");
+  // const dispatch = useDispatch();
+  const { searchRepositories } = useActions();
+
+  const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    // bindActionCreators 로 코드 추상화하기
+
+    // dispatch(actionCreators.searchRepositories(term));
+    // 기존의 dispatch 함수에는 action creator를 전달했다.
+    // 하지만 이는 코드가 지저분해지는 결과를 낳았고, 이를 더 간략화하기 위해 bindActionCreators 함수를 활용할 수 있다.
+    searchRepositories(term);
+  };
+
+  return (
+    <div>
+      <form onSubmit={onSubmit}>
+        <input type="text" value={term} onChange={(e) => setTerm(e.target.value)} />
+        <button>검색</button>
+      </form>
+    </div>
+  );
 };
 
 export default RepositoriesList;

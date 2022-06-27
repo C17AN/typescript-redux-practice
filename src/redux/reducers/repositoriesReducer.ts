@@ -17,7 +17,13 @@ interface RepositoriesState {
 // - 각 액션에 대한 타입(또는 인터페이스)를 정의한다.
 // - 각 액션 타입은 enum 타입으로 정리한다.
 
-const reducer = (state: RepositoriesState, action: Action): RepositoriesState => {
+const initialState = {
+  loading: false,
+  error: null,
+  data: [],
+};
+
+const reducer = (state: RepositoriesState = initialState, action: Action): RepositoriesState => {
   switch (action.type) {
     case ActionType.SEARCH_REPOSITORIES:
       return { loading: true, error: null, data: [] };
