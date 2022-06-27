@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import { useActions } from "../hooks/useActions";
@@ -10,6 +11,9 @@ const RepositoriesList = (props: Props) => {
   const [term, setTerm] = useState("");
   // const dispatch = useDispatch();
   const { searchRepositories } = useActions();
+  // 이거 어디서 보지 않았나?
+  // REACT QUERY!!!!
+  const { data, error, loading } = useSelector((state: any) => state.repositories);
 
   const onSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
